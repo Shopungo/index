@@ -497,7 +497,8 @@ body>header>.max-w-7xl>div:last-child{display:flex;align-items:center;justify-co
 /* Full-screen ForgeFit focus: retain the active fitness page, remove navigation chrome */
 #fitnessWorkspace.ff-focus-mode{position:fixed;inset:0;z-index:110;max-width:none;width:100vw;height:100dvh;overflow:auto;background:var(--bg)}
 #fitnessWorkspace.ff-focus-mode .app-shell{display:block;min-height:100dvh}
-#fitnessWorkspace.ff-focus-mode .sidebar,#fitnessWorkspace.ff-focus-mode .topbar,#fitnessWorkspace.ff-focus-mode .mobile-nav{display:none!important}#fitnessWorkspace.ff-focus-mode .main{width:min(100%,1000px);margin:0 auto;padding:clamp(14px,4vw,42px)!important}
+#fitnessWorkspace.ff-focus-mode .sidebar,#fitnessWorkspace.ff-focus-mode .topbar,#fitnessWorkspace.ff-focus-mode .mobile-nav{display:none!important}
+#fitnessWorkspace.ff-focus-mode .main{width:min(100%,1000px);margin:0 auto;padding:clamp(14px,4vw,42px)!important}
 #fitnessWorkspace.ff-focus-mode .cb-fitness-focus-exit{display:inline-flex!important}
 .cb-fitness-focus-exit{display:none;position:fixed;top:12px;right:12px;z-index:125;border:1px solid #94a3b8;background:#fff;color:#172033;border-radius:999px;padding:9px 14px;font-size:12px;font-weight:700;box-shadow:0 5px 18px #0002}
 /* Focus controls in Journal & Notes */
@@ -996,7 +997,8 @@ body.app-dark #noteList>div,body.app-dark #cbNoteSearch{background:#101827;borde
                 <span id="weekRangeLabel" class="text-xs font-semibold text-slate-500"></span>
             </div>
             <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
-                <!-- Editable Venue / Open Hours Card -->                <section class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 space-y-3">
+                <!-- Editable Venue / Open Hours Card -->
+                <section class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 space-y-3">
                     <div class="flex items-center justify-between gap-2">
                         <div>
                             <h3 data-editable-key="venueHoursTitle" class="text-sm font-bold text-slate-900">Venue / Open Hours</h3>
@@ -1495,7 +1497,8 @@ body.app-dark #noteList>div,body.app-dark #cbNoteSearch{background:#101827;borde
             const blocksLayer = document.getElementById('blocksLayer');
             const currentTimeIndicator = document.getElementById('currentTimeIndicator');
             const timelineScrollContainer = document.getElementById('timelineScrollContainer');
-            const zoomCompactBtn = document.getElementById('zoomCompactBtn');            const zoomDetailedBtn = document.getElementById('zoomDetailedBtn');
+            const zoomCompactBtn = document.getElementById('zoomCompactBtn');
+            const zoomDetailedBtn = document.getElementById('zoomDetailedBtn');
 
             const timerDisplay = document.getElementById('timerDisplay');
             const timerActiveBlockTitle = document.getElementById('timerActiveBlockTitle');
@@ -1995,6 +1998,7 @@ body.app-dark #noteList>div,body.app-dark #cbNoteSearch{background:#101827;borde
                     row.dataset.startMinutes = slotStartMins;
                     row.style.height = `${pixelsPerSlot}px`;
                     row.className = `timeline-slot group relative flex items-start transition-colors hover:bg-indigo-50/40 cursor-pointer ${borderClass}`;
+
                     const labelCol = document.createElement('div');
                     labelCol.className = 'w-16 sm:w-20 pr-2 sm:pr-3 text-right shrink-0 -mt-2 select-none pointer-events-none';
                     if (isHourMark) {
@@ -2494,6 +2498,7 @@ body.app-dark #noteList>div,body.app-dark #cbNoteSearch{background:#101827;borde
             templatesMenuBtn.addEventListener('click', (e) => { e.stopPropagation(); templatesDropdown.classList.toggle('hidden'); });
             document.querySelectorAll('.template-option').forEach(btn => btn.addEventListener('click', () => { templatesDropdown.classList.add('hidden'); applyTemplatePreset(btn.dataset.template, true); }));
             document.addEventListener('click', (e) => { if (!e.target.closest('#templatesDropdownWrapper')) templatesDropdown.classList.add('hidden'); });
+
             document.getElementById('exportIcsBtn').addEventListener('click', exportScheduleToIcs);
             timerToggleBtn.addEventListener('click', () => state.timer.isRunning ? pauseTimer() : startTimer());
             timerResetBtn.addEventListener('click', resetTimer);
@@ -2992,6 +2997,7 @@ body.app-dark #noteList>div,body.app-dark #cbNoteSearch{background:#101827;borde
                 const weekKey = getWeekStartKey(state.selectedDateKey);
                 document.getElementById('weekRangeLabel').textContent = getWeekLabel(state.selectedDateKey);
                 const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
                 document.getElementById('venueHoursEditor').innerHTML = dayNames.map((day, i) => {
                     const h = weeklyData.venueHours[i] || { open:'', close:'' };
                     const closed = !h.open || !h.close;
@@ -3491,7 +3497,8 @@ body.app-dark #noteList>div,body.app-dark #cbNoteSearch{background:#101827;borde
                         if (phase) { if(timer.phase==='rest') phase.textContent='Recovery / breathe'; else if(timer.kind==='meditation'){const bp=breathPhase(timer.elapsed);phase.textContent=`${bp.name} · ${bp.remaining}s`;const orb=document.querySelector('#fitnessWorkspace .breath-orb');if(orb){orb.classList.add('breathing');orb.style.animation='none';orb.style.transition=`transform ${Math.max(0.25,bp.remaining)}s linear, opacity ${Math.max(0.25,bp.remaining)}s linear`;orb.style.transform=bp.name==='Inhale'?'scale(1.28)':bp.name==='Exhale'?'scale(.68)':'scale(1.05)';orb.style.opacity=bp.name==='Exhale'?'.62':'1';orb.dataset.phase=bp.name.toLowerCase();}if(bp.name!==lastBreathPhase){lastBreathPhase=bp.name;if(soundPrefs().beeps){beep(bp.name==='Inhale'?740:bp.name==='Exhale'?520:620,.11);}}} else phase.textContent=boxingMoves[Math.min(5, Math.floor((180 - timer.remaining) / 30))]; }
                         const count = document.getElementById('wellness-count');
                         if (count) count.textContent = timer.kind === 'boxing' ? `Round ${timer.round} of ${timerPrefs().rounds}` : 'Meditation';
-                        const b = document.getElementById('timer-toggle');                        if (b) b.textContent = timer.running ? 'Pause' : 'Resume';
+                        const b = document.getElementById('timer-toggle');
+                        if (b) b.textContent = timer.running ? 'Pause' : 'Resume';
                     }
                 }
                 setInterval(tickTimer, 250);
@@ -3990,7 +3997,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if(sideSections[3]) tasksSlot.appendChild(sideSections[3]);
   if(sideSections[1]) insightsGrid.appendChild(sideSections[1]);
   if(sideSections[2]) insightsGrid.appendChild(sideSections[2]);
-  aside.remove();  schedule.appendChild(timeline);
+  aside.remove();
+  schedule.appendChild(timeline);
   insights.appendChild(insightsGrid); insights.appendChild(reviewSlot); reviewSlot.appendChild(review);
 
   const setTab = (name) => {
